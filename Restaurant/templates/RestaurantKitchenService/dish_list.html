@@ -2,6 +2,6 @@
 
 {% block content %}
   {% for dish in dishes %}
-    <p>{{ dish }}</p>
+    <p>{{ dish.name }} - <a href="{{ dish.get_absolute_url }}">Детальний огляд</a></p>
   {% endfor %}
 {% endblock %}

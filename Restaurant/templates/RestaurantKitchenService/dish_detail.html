@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="main-info">
+      <div class="name">{{ dish.name }}</div>
+      <div class="type">{{ dish.dish_type }}</div>
+      <div class="price">${{ dish.price }}</div>
+    </div>
+
+  <p>The man who coocked it:</p>
+  {% for coocker in dish.cooks.all %}
+    {{ coocker.username }} | {{ coocker.year_of_expirience }}
+  {% endfor %}
+  <p><a href="{% url 'restaurant:update_dish' pk=dish.id %}" class="btn btn-primary">Редагувати</a>
+    <a href="{% url 'restaurant:delete_dish' pk=dish.id %}" class="btn btn-danger">Вилучити</a></p>
+{% endblock %}

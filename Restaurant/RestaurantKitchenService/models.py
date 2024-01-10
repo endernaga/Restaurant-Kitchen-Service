@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 
 
 class DishType(models.Model):
@@ -7,6 +8,10 @@ class DishType(models.Model):
 
     def __str__(self):
         return self.name
+
+
+    def get_absolute_url(self):
+        return reverse("restaurant:dishTypes_detail", kwargs={"pk": self.pk})
 
 
 class Cook(AbstractUser):
@@ -19,6 +24,9 @@ class Cook(AbstractUser):
     def __str__(self):
         return f"{self.username} ({self.first_name} {self.last_name})"
 
+    def get_absolute_url(self):
+        return reverse("restaurant:coockers_detail", kwargs={"pk": self.pk})
+
 
 class Dish(models.Model):
     name = models.CharField(max_length=65)
@@ -26,3 +34,6 @@ class Dish(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2)
     dish_type = models.ForeignKey(DishType, on_delete=models.CASCADE)
     cooks = models.ManyToManyField(Cook)
+
+    def get_absolute_url(self):
+        return reverse("restaurant:dish_view", kwargs={"pk": self.pk})
