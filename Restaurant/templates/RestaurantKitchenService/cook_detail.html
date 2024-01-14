@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Username : {{ cook.username }}</h1>
+  <h2>First name: <b>{{ cook.first_name }}</b></h2>
+  <h2>Last name: <b>{{ cook.last_name }}</b></h2>
+  <h4>Years of expirience: <b>{{ cook.year_of_expirience }}</b></h4>
+<br>
+  <h3>List of coocked dishes</h3>
+  <ul>
+    {% for dish in cook.dish_set.all %}
+      <li><a href="{{ dish.get_absolute_url }}">{{ dish.name }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

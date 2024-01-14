@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <a href="{% url 'restaurant:create_dish' %}" class="top-right-position btn btn-primary">створити страву </a>
   {% for dish in dishes %}
     <p>{{ dish.name }} - <a href="{{ dish.get_absolute_url }}">Детальний огляд</a></p>
   {% endfor %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <a href="{% url 'restaurant:cookers_create' %}" class="top-right-position btn btn-primary">створити кухаря </a>
+  <ul>
+  {% for cooker in cookers %}
+    <li>{{ cooker.username }}</li>
+  {% endfor %}
+  </ul>
+{% endblock %}

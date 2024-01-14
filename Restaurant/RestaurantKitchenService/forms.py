@@ -11,7 +11,7 @@ class DishTypeCreationForm(forms.ModelForm):
         fields = "__all__"
 
 
-class CoockersCreationForm(UserCreationForm):
+class CookersCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Cook
         fields = UserCreationForm.Meta.fields + (
