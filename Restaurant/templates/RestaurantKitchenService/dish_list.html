@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <form method="get" action="">
+    {{ search_form }}
+  </form>
+  <a href="{% url 'restaurant:create_dish' %}" class="top-right-position btn btn-primary">створити страву </a>
+  {% for dish in dishes %}
+    <p>{{ dish.name }} - <a href="{{ dish.get_absolute_url }}">Детальний огляд</a></p>
+  {% endfor %}
+{% endblock %}

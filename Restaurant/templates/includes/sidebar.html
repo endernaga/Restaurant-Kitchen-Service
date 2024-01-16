@@ -1,0 +1,18 @@
+<ul class="sidebar-nav list-group">
+  {% if user.is_authenticated %}
+    <li class="list-group-item">User: <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></li>
+    <form method="POST" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button class="button">Logout</button>
+    </form>
+  {% else %}
+    <li class="list-group-item"><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+  {% endif %}
+
+  <br>
+
+  <li class="list-group-item"><a href="{% url 'restaurant:index' %}">Home</a></li>
+  <li class="list-group-item"><a href="{% url 'restaurant:dishes' %}">All dishes</a></li>
+  <li class="list-group-item"><a href="{% url 'restaurant:cookers' %}">All coockers</a></li>
+  <li class="list-group-item"><a href="{% url 'restaurant:dishTypes' %}">All dish types</a></li>
+</ul>

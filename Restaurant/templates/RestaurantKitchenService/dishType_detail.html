@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p>{{ dish.name }}</p>
+    <p>
+      <a href="{% url 'restaurant:dishTypes_update' pk=dish.id %}" class="btn btn-primary">Редагувати</a>
+      <a href="{% url 'restaurant:dishTypes_delete' pk=dish.id %}" class="btn btn-danger">Вилучити</a>
+    </p>
+    All dish with this type :
+    <ul>
+    {% for dis in dish.dish_set.all %}
+      <li>
+        <a href="{{ dis.get_absolute_url }}">{{ dis.name }}</a>
+      </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
