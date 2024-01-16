@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from RestaurantKitchenService.forms import DishCreationForm, CookersCreationForm, DishTypeCreationForm
+from RestaurantKitchenService.forms import DishCreationForm, CookersCreationForm, DishTypeCreationForm, DishSearchForm, \
+    CookSearchForm, DishTypeSearchForm
 from RestaurantKitchenService.models import DishType, Cook, Dish
 
 
@@ -28,12 +29,22 @@ class AllDishView(generic.ListView):
     paginate_by = 5
     template_name = "RestaurantKitchenService/dish_list.html"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search_form"] = DishSearchForm()
+        return context
+
+    def get_queryset(self):
+        name = self.request.GET.get("name")
+        if name:
+            return Dish.objects.filter(name__icontains=name)
+        return Dish.objects.all()
+
 
 class DishView(generic.DetailView):
     model = Dish
     context_object_name = "dish"
     template_name = "RestaurantKitchenService/dish_detail.html"
-
 
 class CreateDishView(generic.CreateView):
     model = Dish
@@ -58,6 +69,17 @@ class AllCookerView(generic.ListView):
     paginate_by = 5
     template_name = "RestaurantKitchenService/cookers_list.html"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search_form"] = CookSearchForm()
+        return context
+
+    def get_queryset(self):
+        username = self.request.GET.get("username")
+        if username:
+            return Cook.objects.filter(username__icontains=username)
+        return Cook.objects.all()
+
 
 class CreateCookerView(generic.CreateView):
     model = Cook
@@ -74,6 +96,17 @@ class AllDishTypesView(generic.ListView):
     context_object_name = "dishTypes"
     paginate_by = 5
     template_name = "RestaurantKitchenService/dishType_list.html"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search_form"] = DishTypeSearchForm()
+        return context
+
+    def get_queryset(self):
+        name = self.request.GET.get("name")
+        if name:
+            return DishType.objects.filter(name__icontains=name)
+        return DishType.objects.all()
 
 
 class DishTypeView(generic.DetailView):

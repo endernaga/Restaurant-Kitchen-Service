@@ -29,3 +29,15 @@ class DishCreationForm(forms.ModelForm):
     class Meta:
         model = Dish
         fields = "__all__"
+
+
+class DishTypeSearchForm(forms.Form):
+    name = forms.CharField(required=False, max_length=255)
+
+
+class CookSearchForm(forms.Form):
+    username = forms.CharField(required=False, max_length=255)
+
+
+class DishSearchForm(forms.Form):
+    name = forms.CharField(required=False, max_length=255)
