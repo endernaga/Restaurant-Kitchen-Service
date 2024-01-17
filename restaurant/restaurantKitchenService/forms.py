@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
-from RestaurantKitchenService.models import DishType, Cook, Dish
+from restaurantKitchenService.models import DishType, Cook, Dish
 
 
 class DishTypeCreationForm(forms.ModelForm):
@@ -24,7 +24,6 @@ class DishCreationForm(forms.ModelForm):
         queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
-
 
     class Meta:
         model = Dish

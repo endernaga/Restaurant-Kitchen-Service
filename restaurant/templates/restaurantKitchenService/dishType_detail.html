@@ -8,7 +8,7 @@
     </p>
     All dish with this type :
     <ul>
-    {% for dis in dish.dish_set.all %}
+    {% for dis in dish.dish_type.all %}
       <li>
         <a href="{{ dis.get_absolute_url }}">{{ dis.name }}</a>
       </li>

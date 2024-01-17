@@ -3,9 +3,31 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from RestaurantKitchenService.forms import DishCreationForm, CookersCreationForm, DishTypeCreationForm, DishSearchForm, \
-    CookSearchForm, DishTypeSearchForm
-from RestaurantKitchenService.models import DishType, Cook, Dish
+from restaurantKitchenService.forms import (
+    DishCreationForm,
+    CookersCreationForm,
+    DishTypeCreationForm,
+    DishSearchForm,
+    CookSearchForm,
+    DishTypeSearchForm)
+from restaurantKitchenService.models import DishType, Cook, Dish
+
+
+class IndexView(generic.View):
+    templates = "restaurantKitchenService/index.html"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        num_dishes = Dish.objects.count()
+
+        num_visits = self.request.session.get("num_visits", 0)
+        self.request.session["num_visits"] = num_visits + 1
+
+        context = {
+            "num_dishes": num_dishes,
+            "num_visits": self.request.session["num_visits"],
+        }
+
+        return context
 
 
 @login_required
@@ -15,19 +37,22 @@ def index(request):
     num_visits = request.session.get("num_visits", 0)
     request.session["num_visits"] = num_visits + 1
 
-    context ={
+    context = {
         "num_dishes": num_dishes,
         "num_visits": request.session["num_visits"],
     }
 
-    return render(request, "RestaurantKitchenService/index.html", context=context)
+    return render(
+        request,
+        "restaurantKitchenService/index.html",
+        context=context)
 
 
 class AllDishView(generic.ListView):
     model = Dish
     context_object_name = "dishes"
     paginate_by = 5
-    template_name = "RestaurantKitchenService/dish_list.html"
+    template_name = "restaurantKitchenService/dish_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -44,7 +69,8 @@ class AllDishView(generic.ListView):
 class DishView(generic.DetailView):
     model = Dish
     context_object_name = "dish"
-    template_name = "RestaurantKitchenService/dish_detail.html"
+    template_name = "restaurantKitchenService/dish_detail.html"
+
 
 class CreateDishView(generic.CreateView):
     model = Dish
@@ -67,7 +93,7 @@ class AllCookerView(generic.ListView):
     model = Cook
     context_object_name = "cookers"
     paginate_by = 5
-    template_name = "RestaurantKitchenService/cookers_list.html"
+    template_name = "restaurantKitchenService/cookers_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -95,7 +121,7 @@ class AllDishTypesView(generic.ListView):
     model = DishType
     context_object_name = "dishTypes"
     paginate_by = 5
-    template_name = "RestaurantKitchenService/dishType_list.html"
+    template_name = "restaurantKitchenService/dishType_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -112,7 +138,7 @@ class AllDishTypesView(generic.ListView):
 class DishTypeView(generic.DetailView):
     model = DishType
     context_object_name = "dish"
-    template_name = "RestaurantKitchenService/dishType_detail.html"
+    template_name = "restaurantKitchenService/dishType_detail.html"
 
 
 class CreateDishTypeView(generic.CreateView):
